@@ -1,0 +1,24 @@
+{{define "default/news.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/base.css">
+</head>
+
+<body>
+    {{template "public/page_header.html" .}}
+
+    <h2>这是前端新闻页面</h2>
+    <h2>{{.title}}</h2>
+    <!--绑定后台结构体的数据-->
+    <p>{{.news.Title}}</p>
+    <p>{{.news.Content}}</p>
+    {{template "public/page_footer.html" .}}
+</body>
+
+</html>
+{{end}}

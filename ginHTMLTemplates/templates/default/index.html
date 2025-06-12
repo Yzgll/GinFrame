@@ -1,0 +1,98 @@
+{{define "default/index.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/base.css">
+    <!-- 这个静态的加载不到，因为没有申请static/css/base.css路由 -->
+</head>
+
+<body>
+
+    <!-- 模板的嵌套加载公共使用的模板 -->
+    <!-- 类似于重命名，将模板的名字写进来 -->
+    {{template "public/page_header.html" .}}
+
+    <h2>这是前端首页</h2>
+    <!-- {{.}}这是输出数据 -->
+    <h2>{{.title}}</h2>
+    <img src="/static/images/R.jpg" alt="">
+    <!-- 定义变量 -->
+    <!-- 并将后端数据赋值给变量 -->
+    {{$t := .title}}
+    <!-- 使用变量 -->
+    <h4>{{$t}}</h4>
+    <!-- 条件判断 -->
+    {{if ge .score 60}}
+    <p>及格</p>
+    {{else}}
+    <p>不及格</p>
+    {{end}}
+
+    {{if gt .score 90}}
+    <p>优秀</p>
+    {{else if gt .score 80}}
+    <p>良好</p>
+    {{else if gt .score 60}}
+    <p>及格</p>
+    {{else}}
+    <p>不及格</p>
+    {{end}}
+
+    <!-- range循环遍历数据 -->
+    <!-- 循环遍历切片 -->
+    <ul>
+        {{range $key,$val := .hobby}}
+        <li>{{$key}}------{{$val}}</li>
+        {{end}}
+    </ul>
+    <!-- 遍历输出结构体 -->
+    <ul>
+        {{range $key,$val:=.newsList}}
+        <li>{{$key}}------{{$val.Title}}-----{{$val.Content}}</li>
+        {{end}}
+    </ul>
+
+
+    <br>
+    <!-- 测试切片中没有数据 -->
+    <!-- 如果遍历的变量中没有数据就会执行else，如果有就正常输出 -->
+    <ul>
+        {{range $key,$val:=.testslice}}
+        <li>{{$key}}------{{$val}}</li>
+        {{else}}
+        <li>当前没有数据</li>
+        {{end}}
+    </ul>
+
+    <!-- 使用with来解构结构体 -->
+    <!-- 传统写法 -->
+    <p>{{.news.Title}}</p>
+    <p>{{.news.Content}}</p>
+    <!-- 相当于把.news赋值给. -->
+    <p>使用with方法</p>
+    {{with .news}}
+    <p> {{.Title}}</p>
+    <p> {{.Content}}</p>
+    {{end}}
+
+    <h4>使用预定义函数，也叫内置模板函数</h4>
+    <h5>len函数求长度</h5>
+    <p>title的长度为:{{len .title}}</p>
+
+    <h4>使用自定义函数将时间戳转化为年月日形式</h4>
+    <p>转化前的时间戳:{{.date}}</p>
+    <p>转化后的日期:{{UnixTotime .date}}</p>
+
+    <h4>调用第二个自定义模板函数</h4>
+    <p>{{Println "你好" "golang"}}</p>
+    {{template "public/page_footer.html" .}}
+</body>
+
+
+
+</html>
+{{end}}
