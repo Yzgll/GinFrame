@@ -1,2 +1,2 @@
 # ginframe/ginResponseData
-.\main.go:61:18: syntax error: unexpected newline in composite literal; possibly missing comma or }
+.\main.go:76:11: syntax error: unexpected newline in composite literal; possibly missing comma or }

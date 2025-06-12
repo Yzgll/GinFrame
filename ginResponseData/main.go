@@ -14,6 +14,7 @@ type Book struct {
 
 func main() {
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
 	//第一种返回字符串相应
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "这是第一种返回的是%v响应信息", "字符串") //三个参数，其实也可以只有两个不写第三个
@@ -60,6 +61,20 @@ func main() {
 			"ResponseType": "XML",
 			"sucess":       true,
 		}) //可以传入map[string]interface{}，可以和json一样传入结构体
+	})
+	//需要配r.LoadHTMLGlob("templates/*")
+	r.GET("/news", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "news.html", gin.H{
+			"title": "我是后台数据",
+		})
+	})
+
+	r.GET("/goods", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "goods.html", gin.H{
+			"title":     "我是后台数据",
+			"goodsType": "Phone",
+			"price":     200,
+		})
 	})
 	r.Run()
 }
