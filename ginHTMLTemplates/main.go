@@ -16,6 +16,7 @@ package main
 //前面的/static表示路由，后面的表示路径
 import (
 	"fmt"
+	"ginframe/ginHTMLTemplates/routers"
 	"net/http"
 	"text/template"
 	"time"
@@ -50,6 +51,12 @@ func main() {
 	r.LoadHTMLGlob("templates/**/*")
 	//第一个参数表示路由，第二个表示映射的目录
 	r.Static("/static", "./static") //匹配到XXXX路由时就会访问./static目录里的文件
+
+	//路由分组抽离
+	routers.AdminRoutersInit(r)
+	routers.ApiRoutersInit(r)
+	routers.DefaultRoutersInit(r)
+
 	r.GET("/index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "default/index.html", gin.H{
 			"title": "首页",
@@ -97,6 +104,13 @@ func main() {
 		c.HTML(http.StatusOK, "admin/news.html", gin.H{
 			"title": "后台新闻页面",
 		})
+	})
+
+	r.GET("/admin/user/add", func(c *gin.Context) {
+		c.String(200, "增加用户")
+	})
+	r.GET("/admin/user/edit", func(c *gin.Context) {
+		c.String(200, "修改用户")
 	})
 	r.Run()
 }
