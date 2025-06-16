@@ -1,0 +1,22 @@
+{{define "default/user.html"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 点击提交时以post方法给doAddUsr这个地址传值 -->
+    <form action="doAddUsr2" method="post">
+        用户名:<input type="text" name="username" /> <br><br>
+        密码:<input type="password" name="password" /> <br><br>
+        <!-- 年龄:<input type="text" name="age" /> <br><br> -->
+        <input type="submit" value="提交">
+    </form>
+</body>
+
+</html>
+{{end}}
