@@ -106,11 +106,5 @@ func main() {
 		})
 	})
 
-	r.GET("/admin/user/add", func(c *gin.Context) {
-		c.String(200, "增加用户")
-	})
-	r.GET("/admin/user/edit", func(c *gin.Context) {
-		c.String(200, "修改用户")
-	})
 	r.Run()
 }
