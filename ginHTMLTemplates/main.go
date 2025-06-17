@@ -40,7 +40,7 @@ func Println(str1 string, str2 string) string {
 	return str1 + "---" + str2
 }
 func main() {
-	r := gin.Default()
+	r := gin.Default() //这个会默认有两个中间件
 	//template.FuncMap是一个map[string]interface{}，字符串是方法名，后面的是方法实现
 	r.SetFuncMap(template.FuncMap{
 		"UnixTotime": UnixTotime,
