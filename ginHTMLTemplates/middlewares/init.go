@@ -17,7 +17,7 @@ func InitMiddleware(c *gin.Context) {
 	c.Set("username", "张三")
 
 	//定义一个协程统计日志
-	cCp := c.Copy()
+	cCp := c.Copy() //必须使用只读的副本
 	go func() {
 		time.Sleep(5 * time.Second)
 		fmt.Println("Done! in path" + cCp.Request.URL.Path)

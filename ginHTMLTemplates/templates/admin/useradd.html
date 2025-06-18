@@ -1,0 +1,24 @@
+{{define "admin/useradd.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>演示文件上传</h2>
+    <!-- 文件上传需要放在form表单里面 -->
+    <!-- action是文件上传的地址 ，需要配置成路由的地址-->
+     <!-- 文件上传必须加上enctype="multipart/form-data" -->
+    <form action="/admin/user/doUpload" method="post" enctype="multipart/form-data">
+        用户名:<input type="text" name="username" placeholder="用户名"/>
+        <br>
+        <br>
+        头像<input type="file" name="face"/>
+        <br>    <br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>
+{{end}}

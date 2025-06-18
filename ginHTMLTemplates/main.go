@@ -16,10 +16,13 @@ package main
 //前面的/static表示路由，后面的表示路径
 import (
 	"fmt"
+	"ginframe/ginHTMLTemplates/models"
 	"ginframe/ginHTMLTemplates/routers"
 	"net/http"
 	"text/template"
-	"time"
+
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/redis"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,10 +34,7 @@ type Article struct {
 }
 
 // 自定义模板函数
-func UnixTotime(timestamp int) string {
-	t := time.Unix(int64(timestamp), 0)
-	return t.Format("2006-01-2 15:04:05")
-}
+
 func Println(str1 string, str2 string) string {
 	fmt.Println(str1, str2)
 	return str1 + "---" + str2
@@ -43,7 +43,7 @@ func main() {
 	r := gin.Default() //这个会默认有两个中间件
 	//template.FuncMap是一个map[string]interface{}，字符串是方法名，后面的是方法实现
 	r.SetFuncMap(template.FuncMap{
-		"UnixTotime": UnixTotime,
+		"UnixTotime": models.UnixTotime,
 		"Println":    Println,
 	})
 	//如果html模板有多个文件夹多个模块，这里写法要改变成templates/**/**
@@ -51,7 +51,10 @@ func main() {
 	r.LoadHTMLGlob("templates/**/*")
 	//第一个参数表示路由，第二个表示映射的目录
 	r.Static("/static", "./static") //匹配到XXXX路由时就会访问./static目录里的文件
+	//配置session中间件
+	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", "", []byte("secret111"))
 
+	r.Use(sessions.Sessions("mysession", store))
 	//路由分组抽离
 	routers.AdminRoutersInit(r)
 	routers.ApiRoutersInit(r)
@@ -106,5 +109,5 @@ func main() {
 		})
 	})
 
-	r.Run()
+	r.Run(":80")
 }

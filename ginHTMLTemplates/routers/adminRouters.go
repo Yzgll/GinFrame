@@ -18,8 +18,12 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouters.GET("/", admin.IndexController{}.Index)
 
 		adminRouters.GET("/user", admin.UserController{}.Index)
-		adminRouters.GET("/admin/user/add", admin.UserController{}.Add) //调用控制其的方法，不加括号，只注册，不然表示执行
-		adminRouters.GET("/admin/user/edit", admin.UserController{}.Edit)
+		adminRouters.GET("/user/add", admin.UserController{}.Add) //调用控制其的方法，不加括号，只注册，不然表示执行
+		adminRouters.GET("/user/add1", admin.UserController{}.Add1)
+		adminRouters.GET("/user/edit", admin.UserController{}.Edit)
+		adminRouters.POST("/user/doUpload", admin.UserController{}.DoUpLoad)
+		adminRouters.POST("/user/doUploads", admin.UserController{}.DoUpLoads)
+		adminRouters.POST("/user/doUpload1", admin.UserController{}.DoUpLoad1)
 
 		adminRouters.GET("/article", admin.ArticleController{}.Index)
 		adminRouters.GET("/article/add", admin.ArticleController{}.Add)
